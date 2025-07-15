@@ -1,4 +1,4 @@
-package com.auth;
+package com.auth.player;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 

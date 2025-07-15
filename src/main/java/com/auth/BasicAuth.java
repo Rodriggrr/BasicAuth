@@ -2,7 +2,9 @@ package com.auth;
 
 import com.auth.exception.MalformedParsedString;
 import com.auth.util.Colored;
+import com.auth.util.LocalizationManager;
 import com.auth.util.SimpleConfig;
+import com.auth.commands.Commands;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -25,46 +27,34 @@ import net.fabricmc.loader.api.FabricLoader;
 public class BasicAuth implements ModInitializer {
 	public static final String MOD_ID = "basicauth";
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
+	SimpleConfig CONFIG = SimpleConfig.of("config").provider(this::provider).request();
+
+	public final String LOCALE = CONFIG.getOrDefault( "locale", "en_US" );
+	public final boolean REGISTER_NEEDS_ALLOWANCE = CONFIG.getOrDefault( "register_needs_allowance", true );
+	public final int MAX_LOGIN_ATTEMPTS = CONFIG.getOrDefault( "max_login_attempts", 3 );
+
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {registerCommands(dispatcher);
-		});
+		
+
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {Commands.registerCommands(dispatcher);});
+
+
+		LOGGER.info(LocalizationManager.get("test", LOCALE));
 
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
-			SimpleConfig.ConfigRequest request = new SimpleConfig.ConfigRequest(
-				FabricLoader.getInstance().getConfigDir().resolve("basicauth.json").toFile(),
-				"basicauth.json"
-			).provider(namespace -> {
-				// Default config values
-				if (namespace.equals("basicauth")) {
-					return "{ \"enabled\": true, \"maxLoginAttempts\": 5 }";
-				}
-				return "";
-			});
 		});
+		
 	}
 
-	private void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(
-			CommandManager.literal("parse")
-				.then(CommandManager.argument("message", StringArgumentType.string())
-					.executes(context -> {
-						String message = StringArgumentType.getString(context, "message");
-						try {
-							MutableText parsedMessage = Colored.parse(message);
-							context.getSource().sendFeedback(() -> parsedMessage, false);
-						} catch (MalformedParsedString e) {
-							context.getSource().sendError(Text.literal("Failed to parse message: " + e.getMessage()));
-						}
-						return 1;
-					})
-				)
-		);
+	private String provider(String filename) {
+			// Provide default config content or load from resources if needed
+			return 
+			"locale=en_US\n" +
+			"register_needs_allowance=true\n" +
+			"max_login_attempts=3\n";
 	}
 }

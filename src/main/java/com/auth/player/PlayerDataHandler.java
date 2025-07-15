@@ -1,0 +1,160 @@
+package com.auth.player;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.fabricmc.loader.api.FabricLoader;
+
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
+public class PlayerDataHandler {
+    public static final String DATA_FILE = "player_data.json";
+    private static final Gson gson = new Gson();
+    //private static final TypeToken<PlayerModel> PlayerModelType = new TypeToken<PlayerModel>() {};
+
+    private static boolean pathExists(Path path) {
+        return Files.exists(path);
+    }
+
+    private static Path ensureDataFileExists() {
+        Path dataPath = FabricLoader.getInstance().getConfigDir().resolve(DATA_FILE);
+        if (!pathExists(dataPath)) {
+            try {
+                Files.createFile(dataPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return dataPath;
+    }
+
+    public static boolean playerExists(String playerName) {
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = java.nio.file.Files.readString(dataPath);
+            HashMap<String, PlayerModel> map = gson.fromJson(json, new TypeToken<HashMap<String, PlayerModel>>(){}.getType());
+            return map != null && map.containsKey(playerName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static PlayerModel loadPlayerData(String playerName) {
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>() {}.getType();
+            Map<String, PlayerModel> playerMap = gson.fromJson(json, type);
+
+            if (playerMap == null) return null;
+            return playerMap.get(playerName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static HashMap<String, PlayerModel> loadAllPlayerData() {
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>() {}.getType();
+            HashMap<String, PlayerModel> playerMap = gson.fromJson(json, type);
+            return playerMap != null ? playerMap : new HashMap<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+
+    public static void savePlayerData(PlayerModel PlayerModel) {
+        Path dataPath = ensureDataFileExists();
+        HashMap<String, PlayerModel> map = new HashMap<>();
+        try {
+            String existingJson = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>(){}.getType();
+            map = gson.fromJson(existingJson, type);
+            if (map == null) map = new HashMap<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        map.put(PlayerModel.getUsername(), PlayerModel);
+
+        
+        String newJson = gson.toJson(map);
+
+        try {
+            Files.writeString(dataPath, newJson);       
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deletePlayerData(String playerName) {
+        Path dataPath = ensureDataFileExists();
+        HashMap<String, PlayerModel> map = new HashMap<>();
+        try {
+            String existingJson = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>(){}.getType();
+            map = gson.fromJson(existingJson, type);
+            if (map == null) map = new HashMap<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        map.remove(playerName);
+
+        String newJson = gson.toJson(map);
+
+        try {
+            Files.writeString(dataPath, newJson);       
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int size() {
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>(){}.getType();
+            Map<String, PlayerModel> playerMap = gson.fromJson(json, type);
+            return playerMap != null ? playerMap.size() : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static int sizeDenied() {
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>(){}.getType();
+            Map<String, PlayerModel> playerMap = gson.fromJson(json, type);
+            if (playerMap == null) return 0;
+
+            int count = 0;
+            for (PlayerModel player : playerMap.values()) {
+                if (!player.isAllowed()) {
+                    count++;
+                }
+            }
+            return count;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+}

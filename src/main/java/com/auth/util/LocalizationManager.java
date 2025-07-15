@@ -1,4 +1,4 @@
-package com.auth;
+package com.auth.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,7 +16,7 @@ public class LocalizationManager {
     private static Map<String, Map<String, String>> translations = new HashMap<>();
 
     public static void loadFromResource() {
-        try (InputStream stream = LocalizationManager.class.getResourceAsStream("/lang/localizations.json")) {
+        try (InputStream stream = LocalizationManager.class.getResourceAsStream("/lang/locales.json")) {
             if (stream == null) return;
             Reader reader = new InputStreamReader(stream);
             Type type = new TypeToken<Map<String, Map<String, String>>>() {}.getType();
