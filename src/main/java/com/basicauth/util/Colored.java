@@ -1,9 +1,11 @@
-package com.auth.util;
+package com.basicauth.util;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+
+import com.basicauth.exception.MalformedParsedString;
+
 import net.minecraft.text.MutableText;
-import com.auth.exception.MalformedParsedString;
 
 
 

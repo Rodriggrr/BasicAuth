@@ -1,4 +1,4 @@
-package com.auth.exception;
+package com.basicauth.exception;
 
 public class MalformedParsedString extends Exception {
     public MalformedParsedString(String message) {

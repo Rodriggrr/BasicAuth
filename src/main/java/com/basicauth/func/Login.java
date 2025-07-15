@@ -1,18 +1,20 @@
-package com.auth.func;
-
-import com.auth.util.Colored;
-import com.auth.util.LocalizationManager;
-import com.auth.player.*;
-import com.auth.exception.MalformedParsedString;
+package com.basicauth.func;
 
 import net.minecraft.server.network.ServerPlayerEntity;
+
+import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.auth.BasicAuth;
+
+import com.basicauth.BasicAuth;
+import com.basicauth.exception.MalformedParsedString;
+import com.basicauth.player.*;
+import com.basicauth.util.Colored;
+import com.basicauth.util.LocalizationManager;
+
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-
-import static com.auth.util.LocatedAndParsed.parseFromJSON;
 
 
 

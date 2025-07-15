@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.auth.mixin",
+	"package": "com.basicauth.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"LivingEntityMixin"

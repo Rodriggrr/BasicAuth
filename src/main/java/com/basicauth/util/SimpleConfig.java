@@ -1,4 +1,4 @@
-package com.auth.util;
+package com.basicauth.util;
 /*
  * Copyright (c) 2021 magistermaks
  *

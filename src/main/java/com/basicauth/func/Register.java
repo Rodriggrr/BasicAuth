@@ -1,11 +1,14 @@
-package com.auth.func;
+package com.basicauth.func;
 
-import com.auth.player.PlayerModel;
-import com.auth.player.PlayerDataHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import static com.auth.util.LocatedAndParsed.parseFromJSON;
+
+import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.basicauth.player.PlayerDataHandler;
+import com.basicauth.player.PlayerModel;
 
 
 public class Register {

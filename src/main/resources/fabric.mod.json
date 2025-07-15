@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.auth.BasicAuth"
+			"com.basicauth.BasicAuth"
 		],
 		"client": [
-			"com.auth.BasicAuthClient"
+			"com.basicauth.BasicAuthClient"
 		]
 	},
 	"mixins": [

@@ -1,4 +1,4 @@
-package com.auth.util;
+package com.basicauth.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

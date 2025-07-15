@@ -1,7 +1,15 @@
-package com.auth.commands;
+package com.basicauth.commands;
 
-import com.auth.exception.MalformedParsedString;
-import com.auth.util.Colored;
+import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
+import static com.basicauth.BasicAuth.SHOULD_TRANSLATE_COMMANDS;
+import static com.basicauth.util.LocatedAndParsed.commandFromJSON;
+
+import com.basicauth.exception.MalformedParsedString;
+import com.basicauth.func.Allowance;
+import com.basicauth.func.Login;
+import com.basicauth.func.Register;
+import com.basicauth.util.Colored;
+import com.basicauth.util.LocalizationManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
@@ -9,14 +17,6 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-
-import static com.auth.util.LocatedAndParsed.commandFromJSON;
-import com.auth.func.Login;
-import com.auth.func.Register;
-import com.auth.func.Allowance;
-import com.auth.util.LocalizationManager;
-import static com.auth.BasicAuth.SHOULD_TRANSLATE_COMMANDS;
-import static com.auth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
 
 
 public class Commands {

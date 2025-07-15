@@ -1,4 +1,4 @@
-package com.auth;
+package com.basicauth;
 
 import net.fabricmc.api.ClientModInitializer;
 

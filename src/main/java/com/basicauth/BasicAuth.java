@@ -1,16 +1,17 @@
-package com.auth;
+package com.basicauth;
 
-import com.auth.exception.MalformedParsedString;
-import com.auth.util.Colored;
-import com.auth.util.LocalizationManager;
-import com.auth.util.SimpleConfig;
+import com.basicauth.commands.Commands;
+import com.basicauth.exception.MalformedParsedString;
+import com.basicauth.util.Colored;
+import com.basicauth.util.LocalizationManager;
+import com.basicauth.util.SimpleConfig;
 import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
-import com.auth.commands.Commands;
-import static com.auth.util.LocatedAndParsed.parseFromJSON;
-import static com.auth.func.Login.announceLogin;
-import static com.auth.func.Login.logout;
 
 import net.fabricmc.api.ModInitializer;
+
+import static com.basicauth.func.Login.announceLogin;
+import static com.basicauth.func.Login.logout;
+import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

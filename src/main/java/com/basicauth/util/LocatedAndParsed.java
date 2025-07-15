@@ -1,6 +1,7 @@
-package com.auth.util;
+package com.basicauth.util;
 
-import com.auth.exception.MalformedParsedString;
+import com.basicauth.exception.MalformedParsedString;
+
 import net.minecraft.text.MutableText;
 
 public class LocatedAndParsed {

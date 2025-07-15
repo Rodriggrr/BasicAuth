@@ -1,15 +1,16 @@
-package com.auth.func;
+package com.basicauth.func;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
-import static com.auth.util.LocatedAndParsed.parseFromJSON;
 import net.minecraft.entity.player.PlayerEntity;
-import com.auth.exception.*;
+
+import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.auth.player.*;
+import com.basicauth.exception.*;
+import com.basicauth.player.*;
 
 public class Allowance {
     private static Logger LOGGER = LoggerFactory.getLogger(Allowance.class);

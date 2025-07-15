@@ -1,4 +1,4 @@
-package com.auth.mixin.client;
+package com.basicauth.mixin.client;
 
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
