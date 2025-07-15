@@ -2,7 +2,12 @@
     "en_US": {
         "player_not_found": "Player not found.",
         "error_occurred": "An error occurred.",
-        "needs_allowance": "Approval required to play after registration.",
+        
+        "admin.needs_allowance": "Approval required to play after registration.",
+        "admin.already_allowed": "Player already allowed.",
+        "admin.allowed_successfully" : "Player was successfully allowed.",
+        "admin.already_denied" : "Player is already denied.",
+        "admin.denied_successfully" : "Player is now denied",
 
         "login.already_authenticated": "You are already authenticated.",
         "login.success": "Login successful.",
@@ -14,6 +19,14 @@
         "register.player_already_exists": "You already have an account. Use /login <password> to log in.",
 
         "welcome.new_player": "¤aWelcome to the server ¤b%s¤a! Use ¤e&i&/register <password> ¤ato create an account.",
-        "welcome.back_player": "Welcome back, %s!"
+        "welcome.back_player": "Welcome back, %s!",
+
+        "command.login": "login",
+        "command.register": "register",
+        "command.password": "password",
+        "command.allow": "allow",
+        "command.deny": "deny",
+        "command.delete": "delete",
+        "command.player_name": "name"
     }
 }

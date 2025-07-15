@@ -35,6 +35,7 @@ public class BasicAuth implements ModInitializer {
 
 	public static final String LOCALE = CONFIG.getOrDefault( "locale", "en_US" );
 	public static final boolean REGISTER_NEEDS_ALLOWANCE = CONFIG.getOrDefault( "register_needs_allowance", true );
+	public static final boolean SHOULD_TRANSLATE_COMMANDS = CONFIG.getOrDefault( "should_translate_commands", true );
 	public static final int MAX_LOGIN_ATTEMPTS = CONFIG.getOrDefault( "max_login_attempts", 3 );
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -63,7 +64,9 @@ public class BasicAuth implements ModInitializer {
 	private static String provider(String filename) {
 			// Provide default config content or load from resources if needed
 			return 
+			"#Localization of the commands and text. Note: the JSON callback will show if there's no translation for that specific language.\nTo contribute, visit: https://github.com/Rodriggrr/BasicAuth/blob/1.21.7/src/main/resources/lang/locales.json" +
 			"locale=en_US\n" +
+			"shoud_translate_commands=true" +
 			"register_needs_allowance=true\n" +
 			"max_login_attempts=3\n";
 	}

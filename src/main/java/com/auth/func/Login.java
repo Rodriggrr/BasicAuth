@@ -26,16 +26,16 @@ public class Login {
      * @param player The player entity to authenticate.
      * @param password The password to authenticate with.
      */
-    public static void authenticate(ServerPlayerEntity player, String password) {
+    public static boolean authenticate(ServerPlayerEntity player, String password) {
         PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
         try {
             if (playerData == null) {
                 player.sendMessage(parseFromJSON("player_not_found"), false);
-                return;
+                return false;
             }
             if (playerData.isAuthenticated()) {
                 player.sendMessage(parseFromJSON("login.already_authenticated"), false);
-                return;
+                return false;
             }
             if (playerData.getPassword().equals(password)) {
                 playerData.setAuthenticated(true);
@@ -51,6 +51,7 @@ public class Login {
                     player.sendMessage(parseFromJSON("login.failed"), false);
                 }
             }
+            return true;
         } catch (Exception e) {
             try {
                 player.sendMessage(parseFromJSON("error_occurred"), false);
@@ -58,7 +59,7 @@ public class Login {
                 LOGGER.error("Failed to parse error message", malformedParsedString);
             }
             e.printStackTrace();
-            return;
+            return false;
         }
     }
 
@@ -90,6 +91,22 @@ public class Login {
         } catch (MalformedParsedString e) {
             LOGGER.error("Failed to parse welcome message", e);
             return Text.literal("Welcome to the server!");
+        }
+    }
+
+    public static void awaitAdminAllowance(boolean loginSuccessful, ServerPlayerEntity player) {
+        //method to broadcast to ops that soeone new have registered
+        PlayerModel playerData =  PlayerDataHandler.loadPlayerData(player);
+        boolean needs_allowance = BasicAuth.REGISTER_NEEDS_ALLOWANCE;
+        if(!loginSuccessful)
+            return;
+
+        try {
+            if(!playerData.isAuthenticated() && needs_allowance) {
+                player.sendMessage(parseFromJSON("admin.needs_allowance"));
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while getting player " + playerData.getUsername() + " permission.", e);
         }
     }
 }
