@@ -1,2 +1,2 @@
 # BasicAuth
-BasicAuth is a simple authorization system for Minecraft java.
+BasicAuth is a simple authorization system for Minecraft java servers.
