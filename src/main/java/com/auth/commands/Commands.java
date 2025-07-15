@@ -10,6 +10,9 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
+import com.auth.func.Login;
+import com.auth.func.Register;
+
 public class Commands {
     public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
 		dispatcher.register(
@@ -29,15 +32,21 @@ public class Commands {
 		);
 		dispatcher.register(
 			CommandManager.literal("login")
-				.then(CommandManager.argument("username", StringArgumentType.string())
+				.then(CommandManager.argument("password", StringArgumentType.string())
 					.executes(context -> {
-						String username = StringArgumentType.getString(context, "username");
-						ServerCommandSource source = context.getSource();
-						source.sendFeedback(() -> Text.literal("Login command executed for user: " + username), false);
+						Login.authenticate(context.getSource().getPlayer(), StringArgumentType.getString(context, "password"));
 						return 1;
 					})
 				)
 		);
-	}
-
+        dispatcher.register(
+            CommandManager.literal("register")
+                .then(CommandManager.argument("password", StringArgumentType.string())
+                    .executes(context -> {
+                        Register.register(context.getSource().getPlayer(), StringArgumentType.getString(context, "password"));
+                        return 1;
+                    })
+                )
+        );
+    }
 }

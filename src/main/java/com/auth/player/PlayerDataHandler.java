@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.fabricmc.loader.api.FabricLoader;
-
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -61,6 +61,10 @@ public class PlayerDataHandler {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static PlayerModel loadPlayerData(ServerPlayerEntity player) {
+        return loadPlayerData(player.getName().getString());
     }
 
     public static HashMap<String, PlayerModel> loadAllPlayerData() {

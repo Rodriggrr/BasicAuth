@@ -1,5 +1,19 @@
 {
     "en_US": {
-        
+        "player_not_found": "Player not found.",
+        "error_occurred": "An error occurred.",
+        "needs_allowance": "Approval required to play after registration.",
+
+        "login.already_authenticated": "You are already authenticated.",
+        "login.success": "Login successful.",
+        "login.failed": "Login failed. Please check your username and password.",
+        "login.too_many_attempts": "Too many login attempts. Please try again later.",
+
+        "register.success": "Registration successful.",
+        "register.failed": "Registration failed. Please try again.",
+        "register.player_already_exists": "You already have an account. Use /login <password> to log in.",
+
+        "welcome.new_player": "¤aWelcome to the server ¤b%s¤a! Use ¤e&i&/register <password> ¤ato create an account.",
+        "welcome.back_player": "Welcome back, %s!"
     }
 }

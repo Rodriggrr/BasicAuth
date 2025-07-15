@@ -4,7 +4,11 @@ import com.auth.exception.MalformedParsedString;
 import com.auth.util.Colored;
 import com.auth.util.LocalizationManager;
 import com.auth.util.SimpleConfig;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
 import com.auth.commands.Commands;
+import static com.auth.util.LocatedAndParsed.parseFromJSON;
+import static com.auth.func.Login.announceLogin;
+import static com.auth.func.Login.logout;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -27,17 +31,17 @@ import net.fabricmc.loader.api.FabricLoader;
 public class BasicAuth implements ModInitializer {
 	public static final String MOD_ID = "basicauth";
 
-	SimpleConfig CONFIG = SimpleConfig.of("config").provider(this::provider).request();
+	static SimpleConfig CONFIG = SimpleConfig.of("config").provider(BasicAuth::provider).request();
 
-	public final String LOCALE = CONFIG.getOrDefault( "locale", "en_US" );
-	public final boolean REGISTER_NEEDS_ALLOWANCE = CONFIG.getOrDefault( "register_needs_allowance", true );
-	public final int MAX_LOGIN_ATTEMPTS = CONFIG.getOrDefault( "max_login_attempts", 3 );
+	public static final String LOCALE = CONFIG.getOrDefault( "locale", "en_US" );
+	public static final boolean REGISTER_NEEDS_ALLOWANCE = CONFIG.getOrDefault( "register_needs_allowance", true );
+	public static final int MAX_LOGIN_ATTEMPTS = CONFIG.getOrDefault( "max_login_attempts", 3 );
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
-		
+		LocalizationManager.loadFromResource(LOCALE);
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {Commands.registerCommands(dispatcher);});
 
@@ -46,11 +50,17 @@ public class BasicAuth implements ModInitializer {
 
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
+			player.sendMessage(announceLogin(player));
+		});
+
+		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
+			ServerPlayerEntity player = handler.getPlayer();
+			logout(player);
 		});
 		
 	}
 
-	private String provider(String filename) {
+	private static String provider(String filename) {
 			// Provide default config content or load from resources if needed
 			return 
 			"locale=en_US\n" +

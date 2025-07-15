@@ -1,0 +1,95 @@
+package com.auth.func;
+
+import com.auth.util.Colored;
+import com.auth.util.LocalizationManager;
+import com.auth.player.*;
+import com.auth.exception.MalformedParsedString;
+
+import net.minecraft.server.network.ServerPlayerEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.auth.BasicAuth;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+
+import static com.auth.util.LocatedAndParsed.parseFromJSON;
+
+
+
+public class Login {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);
+
+
+    /**
+     * Authenticates a player with the given password.
+     * 
+     * @param player The player entity to authenticate.
+     * @param password The password to authenticate with.
+     */
+    public static void authenticate(ServerPlayerEntity player, String password) {
+        PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
+        try {
+            if (playerData == null) {
+                player.sendMessage(parseFromJSON("player_not_found"), false);
+                return;
+            }
+            if (playerData.isAuthenticated()) {
+                player.sendMessage(parseFromJSON("login.already_authenticated"), false);
+                return;
+            }
+            if (playerData.getPassword().equals(password)) {
+                playerData.setAuthenticated(true);
+                PlayerDataHandler.savePlayerData(playerData);
+                player.sendMessage(parseFromJSON("login.success"), false);
+            } else {
+                playerData.incrementLoginAttemptCount();
+                PlayerDataHandler.savePlayerData(playerData);
+                if (playerData.getLoginAttemptCount() >= BasicAuth.MAX_LOGIN_ATTEMPTS) {
+                    player.sendMessage(parseFromJSON("login.too_many_attempts"), false);
+                    // Optionally kick the player or take other actions
+                } else {
+                    player.sendMessage(parseFromJSON("login.failed"), false);
+                }
+            }
+        } catch (Exception e) {
+            try {
+                player.sendMessage(parseFromJSON("error_occurred"), false);
+            } catch (MalformedParsedString malformedParsedString) {
+                LOGGER.error("Failed to parse error message", malformedParsedString);
+            }
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    public static void logout(ServerPlayerEntity player) {
+        PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
+
+        try {
+            if (playerData != null) {
+                playerData.setAuthenticated(false);
+                PlayerDataHandler.savePlayerData(playerData);
+                player.sendMessage(parseFromJSON("logout.success"), false);
+            } else {
+                player.sendMessage(parseFromJSON("player_not_found"), false);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Failed to logout player: {}", player.getName().getString(), e);
+            e.printStackTrace();
+        }
+    }
+
+    public static MutableText announceLogin(ServerPlayerEntity player) {
+        try {
+
+            PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
+            if (playerData == null) {
+                return parseFromJSON("welcome.new_player", player.getName().getString());
+            }
+            return parseFromJSON("welcome.back_player", playerData.getUsername());
+        } catch (MalformedParsedString e) {
+            LOGGER.error("Failed to parse welcome message", e);
+            return Text.literal("Welcome to the server!");
+        }
+    }
+}

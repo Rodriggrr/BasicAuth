@@ -14,8 +14,11 @@ import java.util.Map;
 public class LocalizationManager {
     private static final Gson gson = new Gson();
     private static Map<String, Map<String, String>> translations = new HashMap<>();
+    public static String LOCALE;
 
-    public static void loadFromResource() {
+    public static void loadFromResource(String LOCALE) {
+        LocalizationManager.LOCALE = LOCALE;
+        translations.clear();
         try (InputStream stream = LocalizationManager.class.getResourceAsStream("/lang/locales.json")) {
             if (stream == null) return;
             Reader reader = new InputStreamReader(stream);
@@ -26,7 +29,12 @@ public class LocalizationManager {
         }
     }
 
-    public static String get(String key, String langCode) {
-        return translations.getOrDefault(langCode, Collections.emptyMap()).getOrDefault(key, key);
-    }
+    public static String get(String key, String langCode, Object... args) {
+    String template = translations
+        .getOrDefault(langCode, Collections.emptyMap())
+        .getOrDefault(key, key);
+
+    return String.format(template, args);
+}
+
 }
