@@ -13,6 +13,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import static com.basicauth.BasicAuth.players;
+
+// checar se esta no mapa
+// se nao tiver, carregar do disco.
 
 public class PlayerDataHandler {
     public static final String DATA_FILE = "player_data.json";
@@ -37,6 +41,10 @@ public class PlayerDataHandler {
     }
 
     public static boolean playerExists(String playerName) {
+        PlayerModel player = players.get(playerName);
+        if(player != null)
+            return true;
+        
         Path dataPath = ensureDataFileExists();
         try {
             String json = java.nio.file.Files.readString(dataPath);
@@ -49,6 +57,14 @@ public class PlayerDataHandler {
     }
 
     public static PlayerModel loadPlayerData(String playerName) {
+        PlayerModel player = null;
+        if(players != null) {
+            player = players.get(playerName);
+        }
+
+        if(player != null)
+                return player;
+        
         Path dataPath = ensureDataFileExists();
         try {
             String json = Files.readString(dataPath);
@@ -56,11 +72,17 @@ public class PlayerDataHandler {
             Map<String, PlayerModel> playerMap = gson.fromJson(json, type);
 
             if (playerMap == null) return null;
-            return playerMap.get(playerName);
+
+            player = playerMap.get(playerName);
+
+            players.put(playerName, player);
+
+            return player;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+        
     }
 
     public static PlayerModel loadPlayerData(ServerPlayerEntity player) {
@@ -81,7 +103,15 @@ public class PlayerDataHandler {
     }
 
 
-    public static void savePlayerData(PlayerModel PlayerModel) {
+    public static void savePlayerData(PlayerModel playerModel) {
+        if(playerModel == null) {
+            return;
+        }
+        
+        players.put(playerModel.getUsername(), playerModel);
+
+
+
         Path dataPath = ensureDataFileExists();
         HashMap<String, PlayerModel> map = new HashMap<>();
         try {
@@ -92,8 +122,8 @@ public class PlayerDataHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        map.put(PlayerModel.getUsername(), PlayerModel);
+
+        map.put(playerModel.getUsername(), playerModel);
 
         
         String newJson = gson.toJson(map);

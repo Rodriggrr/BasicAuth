@@ -15,6 +15,7 @@ import com.basicauth.util.LocalizationManager;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
 
 
 
@@ -43,6 +44,7 @@ public class Login {
                 playerData.setAuthenticated(true);
                 PlayerDataHandler.savePlayerData(playerData);
                 player.sendMessage(parseFromJSON("login.success"), false);
+
             } else {
                 playerData.incrementLoginAttemptCount();
                 PlayerDataHandler.savePlayerData(playerData);
@@ -104,8 +106,10 @@ public class Login {
             return;
 
         try {
-            if(!playerData.isAuthenticated() && needs_allowance) {
+            if(playerData.isAuthenticated() && (!playerData.isAllowed() && needs_allowance)) {
                 player.sendMessage(parseFromJSON("admin.needs_allowance"));
+            } else {
+                player.changeGameMode(player.getServer().getDefaultGameMode());
             }
         } catch (Exception e) {
             LOGGER.error("Error while getting player " + playerData.getUsername() + " permission.", e);

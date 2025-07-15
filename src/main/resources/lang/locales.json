@@ -19,7 +19,7 @@
         "register.player_already_exists": "You already have an account. Use /login <password> to log in.",
 
         "welcome.new_player": "¤aWelcome to the server ¤b%s¤a! Use ¤e&i&/register <password> ¤ato create an account.",
-        "welcome.back_player": "Welcome back, %s!",
+        "welcome.back_player": "Welcome back, %s! Use /login <password> to login!",
 
         "command.login": "login",
         "command.register": "register",

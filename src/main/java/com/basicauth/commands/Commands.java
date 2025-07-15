@@ -17,6 +17,10 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.GameMode;
+
 
 
 public class Commands {
@@ -77,6 +81,13 @@ public class Commands {
                     .then(CommandManager.argument(commandFromJSON("command.player_name"), StringArgumentType.string())
                         .executes(context -> {
                             Allowance.deny(StringArgumentType.getString(context, commandFromJSON("command.player_name")), context.getSource().getPlayer());
+                            MinecraftServer server = context.getSource().getServer();
+                            String playerName = StringArgumentType.getString(context, commandFromJSON("command.player_name"));
+                            ServerPlayerEntity player = server.getPlayerManager().getPlayer(playerName);
+
+                            if (player != null) {
+                                player.changeGameMode(GameMode.SPECTATOR);
+                            }
                             return 1;
                         })
                     )    

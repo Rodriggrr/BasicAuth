@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import com.basicauth.exception.*;
 import com.basicauth.player.*;
+import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
+import net.minecraft.world.GameMode;
 
 public class Allowance {
     private static Logger LOGGER = LoggerFactory.getLogger(Allowance.class);
@@ -67,7 +69,22 @@ public class Allowance {
         return true;
     }
 
-    public static boolean shouldMove(PlayerEntity player) {
-        return PlayerDataHandler.loadPlayerData(player.getName().getString()).isAllowed();
+    public static boolean allowed(ServerPlayerEntity player) throws PlayerDataIsNull {
+        PlayerModel playerData = PlayerDataHandler.loadPlayerData(player.getName().getString());
+        
+        if(playerData == null) return false;
+
+        return (REGISTER_NEEDS_ALLOWANCE ? playerData.isAllowed() : true) && playerData.isAuthenticated();
+    }
+
+    public static void setGameMode(ServerPlayerEntity player) {
+        PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
+
+        if(playerData == null || !playerData.isAuthenticated() || (!playerData.isAllowed() && REGISTER_NEEDS_ALLOWANCE)) {
+            player.changeGameMode(GameMode.SPECTATOR);
+            return;
+        }
+        
+        player.changeGameMode(player.getServer().getDefaultGameMode());
     }
 }
