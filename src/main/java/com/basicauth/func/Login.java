@@ -106,11 +106,9 @@ public class Login {
             return;
 
         try {
-            if(playerData.isAuthenticated() && (!playerData.isAllowed() && needs_allowance)) {
+            if(playerData.isAuthenticated() && (!playerData.isAllowed() && needs_allowance)) 
                 player.sendMessage(parseFromJSON("admin.needs_allowance"));
-            } else {
-                player.changeGameMode(player.getServer().getDefaultGameMode());
-            }
+
         } catch (Exception e) {
             LOGGER.error("Error while getting player " + playerData.getUsername() + " permission.", e);
         }
