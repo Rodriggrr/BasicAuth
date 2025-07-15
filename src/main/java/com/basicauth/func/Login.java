@@ -10,14 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.basicauth.BasicAuth;
 import com.basicauth.exception.MalformedParsedString;
 import com.basicauth.player.*;
-import com.basicauth.util.Colored;
-import com.basicauth.util.LocalizationManager;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
-
-
 
 public class Login {
     private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);

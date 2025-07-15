@@ -1,7 +1,6 @@
 package com.basicauth.commands;
 
-import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
-import static com.basicauth.BasicAuth.SHOULD_TRANSLATE_COMMANDS;
+// import static com.basicauth.BasicAuth.SHOULD_TRANSLATE_COMMANDS;
 import static com.basicauth.util.LocatedAndParsed.commandFromJSON;
 
 import com.basicauth.exception.MalformedParsedString;
@@ -9,7 +8,8 @@ import com.basicauth.func.Allowance;
 import com.basicauth.func.Login;
 import com.basicauth.func.Register;
 import com.basicauth.util.Colored;
-import com.basicauth.util.LocalizationManager;
+// import com.basicauth.util.LocalizationManager;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
@@ -24,14 +24,14 @@ import net.minecraft.world.GameMode;
 
 
 public class Commands {
-    private static boolean translate;
-    private static String locale = "en_US";
+    // private static boolean translate;
+    // private static String locale = "en_US";
     
-    public Commands(){
-        if(SHOULD_TRANSLATE_COMMANDS){
-            locale = LocalizationManager.LOCALE;
-        }
-    }
+    // public Commands(){
+    //     if(SHOULD_TRANSLATE_COMMANDS){
+    //         locale = LocalizationManager.LOCALE;
+    //     }
+    // }
 
     public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
 		dispatcher.register(

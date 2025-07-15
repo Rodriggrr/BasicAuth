@@ -1,9 +1,10 @@
 package com.basicauth.mixin;
 
+import static com.basicauth.func.Allowance.allowed;
+
 import com.basicauth.debug.LoggerStatic;
 import com.basicauth.util.helper.MovementState;
 
-import static com.basicauth.func.Allowance.allowed;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -13,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 @Mixin(ServerPlayNetworkHandler.class)

@@ -1,18 +1,17 @@
 package com.basicauth.func;
 
+import net.minecraft.world.GameMode;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.entity.player.PlayerEntity;
 
 import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
+import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
+
+import com.basicauth.exception.*;
+import com.basicauth.player.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.basicauth.exception.*;
-import com.basicauth.player.*;
-import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
-import net.minecraft.world.GameMode;
 
 public class Allowance {
     private static Logger LOGGER = LoggerFactory.getLogger(Allowance.class);
