@@ -45,7 +45,7 @@ public class Commands {
 						String message = StringArgumentType.getString(context, "message");
 						try {
 							MutableText parsedMessage = Colored.parse(message);
-							context.getSource().sendFeedback(() -> parsedMessage, false);
+							context.getSource().getServer().getPlayerManager().broadcast(parsedMessage, false);
 						} catch (MalformedParsedString e) {
 							context.getSource().sendError(Text.literal("Failed to parse message: " + e.getMessage()));
 						}
@@ -119,7 +119,7 @@ public class Commands {
                         })
                     )
                 )
-                .then(CommandManager.literal("password_reset")
+                .then(CommandManager.literal(commandFromJSON("command.password_reset"))
                     .then(CommandManager.argument(commandFromJSON("command.player_name"), StringArgumentType.string())
                         .then(CommandManager.argument(commandFromJSON("command.password"), StringArgumentType.string())
                             .executes(context -> {

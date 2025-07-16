@@ -82,6 +82,7 @@
     "command.deny": "negar",
     "command.delete": "apagar",
     "command.player_name": "nome",
-    "command.list_denied": "listar_negados"
+    "command.list_denied": "listar_negados",
+    "command.password_reset": "resetar_senha"
   }
 }
