@@ -28,7 +28,7 @@ public class Login {
         PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
         try {
             if (playerData == null) {
-                player.sendMessage(parseFromJSON("player_not_found"), false);
+                player.sendMessage(parseFromJSON("login.not_registered", player), false);
                 return false;
             }
             if (playerData.isAuthenticated()) {
@@ -69,10 +69,8 @@ public class Login {
             if (playerData != null) {
                 playerData.setAuthenticated(false);
                 PlayerDataHandler.savePlayerData(playerData);
-                player.sendMessage(parseFromJSON("logout.success"), false);
-            } else {
-                player.sendMessage(parseFromJSON("player_not_found"), false);
             }
+
         } catch (Exception e) {
             LOGGER.error("Failed to logout player: {}", player.getName().getString(), e);
             e.printStackTrace();

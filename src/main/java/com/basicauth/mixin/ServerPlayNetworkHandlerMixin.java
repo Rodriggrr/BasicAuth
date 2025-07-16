@@ -4,7 +4,7 @@ import static com.basicauth.func.Allowance.allowed;
 
 import com.basicauth.debug.LoggerStatic;
 import com.basicauth.util.helper.MovementState;
-
+import com.basicauth.util.helper.OpsHelper;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -35,8 +35,10 @@ public class ServerPlayNetworkHandlerMixin {
                     );
 
                     player.changeGameMode(player.getServer().getDefaultGameMode());
-
-                    LoggerStatic.info("TELEPORTED.");
+                    if(OpsHelper.isOp(player)) {
+                        player.getServer().getCommandManager().sendCommandTree(player);
+                    }
+                    OpsHelper.playersAwaitingAllowanceReminder(player);
                 }
             } else {
                 // Se ainda estiver bloqueado, cancela o movimento

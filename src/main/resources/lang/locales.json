@@ -1,32 +1,44 @@
 {
-    "en_US": {
-        "player_not_found": "Player not found.",
-        "error_occurred": "An error occurred.",
-        
-        "admin.needs_allowance": "Approval required to play after registration.",
-        "admin.already_allowed": "Player already allowed.",
-        "admin.allowed_successfully" : "Player was successfully allowed.",
-        "admin.already_denied" : "Player is already denied.",
-        "admin.denied_successfully" : "Player is now denied",
+  "en_US": {
+    "player_not_found": "¤c&bi&[ERROR]¤f Player ¤e%s¤f not found.",
+    "error_occurred": "¤c&bi&[ERROR]¤f An error occurred.",
 
-        "login.already_authenticated": "You are already authenticated.",
-        "login.success": "Login successful.",
-        "login.failed": "Login failed. Please check your username and password.",
-        "login.too_many_attempts": "Too many login attempts. Please try again later.",
+    "admin.needs_allowance": "¤6&bi&[INFO]¤f You are ¤c&b&not approved!¤f Wait for an admin to approve you so you can play.",
+    "admin.already_allowed": "¤c&bi&[ERROR]¤f Player ¤e%s¤f is already allowed.",
+    "admin.allowed_successfully": "¤6&bi&[INFO]¤f Player ¤a%s¤f was ¤a&b&successfully¤f allowed.",
+    "admin.allowed_notification": "¤a&bi&[¤*&bi&ALLOWED¤a&bi&]¤f You have been ¤a&b&allowed¤f by an admin. You can now play!",
+    "admin.already_denied": "¤c&bi&[ERROR]¤f Player ¤e%s¤f is already denied.",
+    "admin.denied_successfully": "¤6&bi&[INFO]¤f Player ¤e%s¤f is now denied.",
+    "admin.denied_notification": "¤c&bi&[DENIED]¤f You have been ¤c&b&denied¤f by an admin. Contact them for more information.",
+    "admin.new_player_registered": "¤6&bi&[INFO]¤f New player ¤a%s¤f has registered. Use ¤b/basicauth allow <name>¤f to allow them.",
+    "admin.players_waiting_for_allowance": "¤6&bi&[INFO]¤f Players waiting for allowance: ¤e%s¤f. Use ¤b/basicauth list_denied¤f to check who they are.",
+    "admin.list_denied": "¤6&bi&[INFO]¤f Players currently denied:\n¤e&bi&%s¤f\nUse ¤b/basicauth allow <name>¤f to allow them.",
+    "admin.no_players_waiting_for_allowance": "¤6&bi&[INFO]¤f No players are currently waiting for allowance.",
+    "admin.password_reset_success": "¤6&bi&[INFO]¤f Password for player ¤e%s¤f has been ¤a&b&successfully reset¤f.",
+    "admin.player_deleted": "¤6&bi&[INFO]¤f Player ¤e%s¤f has been ¤c&b&deleted from the database.",
 
-        "register.success": "Registration successful.",
-        "register.failed": "Registration failed. Please try again.",
-        "register.player_already_exists": "You already have an account. Use /login <password> to log in.",
+    "login.already_authenticated": "¤c&bi&[ERROR]¤f You are already authenticated.",
+    "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&successful¤f.",
+    "login.failed": "¤c&bi&[ERROR]¤f Login failed. ¤ePlease check your username and password.",
+    "login.too_many_attempts": "¤c&bi&[ERROR]¤f Too many login attempts. ¤eTry again later.",
+    "login.not_registered": "¤c&bi&[ERROR]¤f You are not registered. Use ¤b/register <password>¤f to create an account.",
 
-        "welcome.new_player": "¤aWelcome to the server ¤b%s¤a! Use ¤e&i&/register <password> ¤ato create an account.",
-        "welcome.back_player": "Welcome back, %s! Use /login <password> to login!",
+    "register.success": "¤6&bi&[INFO]¤f Registration ¤a&b&successful¤f! Use ¤b/login <password>¤f to log in.",
+    "register.failed": "¤c&bi&[ERROR]¤f Registration failed. ¤ePlease try again.",
+    "register.already_registered": "¤c&bi&[ERROR]¤f You already have an account. Use ¤b/login <password>¤f to log in.",
 
-        "command.login": "login",
-        "command.register": "register",
-        "command.password": "password",
-        "command.allow": "allow",
-        "command.deny": "deny",
-        "command.delete": "delete",
-        "command.player_name": "name"
-    }
+    "welcome.new_player": "¤6&bi&[INFO]¤f Welcome to the server, ¤a%s¤f! Use ¤b/register <password>¤f to create an account.",
+    "welcome.back_player": "¤6&bi&[INFO]¤f Welcome back, ¤a%s¤f! Use ¤b/login <password>¤f to login!",
+
+    "player.has_been_deleted": "¤6&bi&[INFO]¤f You have been ¤c&b&deleted¤f from the database, meaning you are now unauthenticated. Use ¤b/register <password>¤f to create a new account.",
+
+    "command.login": "login",
+    "command.register": "register",
+    "command.password": "password",
+    "command.allow": "allow",
+    "command.deny": "deny",
+    "command.delete": "delete",
+    "command.player_name": "name",
+    "command.list_denied": "list_denied"
+  }
 }

@@ -74,6 +74,7 @@ public class PlayerDataHandler {
             if (playerMap == null) return null;
 
             player = playerMap.get(playerName);
+            if (player == null) return null;
 
             players.put(playerName, player);
 
@@ -82,10 +83,13 @@ public class PlayerDataHandler {
             e.printStackTrace();
             return null;
         }
-        
     }
 
     public static PlayerModel loadPlayerData(ServerPlayerEntity player) {
+        if(player == null) {
+            return null;
+        }
+
         return loadPlayerData(player.getName().getString());
     }
 
@@ -110,8 +114,6 @@ public class PlayerDataHandler {
         
         players.put(playerModel.getUsername(), playerModel);
 
-
-
         Path dataPath = ensureDataFileExists();
         HashMap<String, PlayerModel> map = new HashMap<>();
         try {
@@ -125,7 +127,6 @@ public class PlayerDataHandler {
 
         map.put(playerModel.getUsername(), playerModel);
 
-        
         String newJson = gson.toJson(map);
 
         try {
@@ -135,7 +136,12 @@ public class PlayerDataHandler {
         }
     }
 
-    public static void deletePlayerData(String playerName) {
+    public static boolean deletePlayerData(String playerName) {
+        if(playerName == null || playerName.isEmpty()) {
+            return false;
+        }
+        players.remove(playerName);
+
         Path dataPath = ensureDataFileExists();
         HashMap<String, PlayerModel> map = new HashMap<>();
         try {
@@ -156,6 +162,7 @@ public class PlayerDataHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     public static int size() {
@@ -191,4 +198,5 @@ public class PlayerDataHandler {
             return 0;
         }
     }
+    
 }

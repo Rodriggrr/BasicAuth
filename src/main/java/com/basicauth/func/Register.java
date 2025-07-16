@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.basicauth.player.PlayerDataHandler;
 import com.basicauth.player.PlayerModel;
+import com.basicauth.util.helper.OpsHelper;
 
 
 public class Register {
@@ -23,13 +24,15 @@ public class Register {
         PlayerModel playerData = PlayerDataHandler.loadPlayerData(player.getName().getString());
         try {
             if (playerData != null) {
-                player.sendMessage(parseFromJSON("player_already_exists"), false);
+                player.sendMessage(parseFromJSON("register.already_registered"), false);
                 return;
             }
 
             playerData = new PlayerModel(player.getName().getString(), password, player);
             PlayerDataHandler.savePlayerData(playerData);
             player.sendMessage(parseFromJSON("register.success"), false);
+            OpsHelper.broadcastToOps("admin.new_player_registered", player.getName().getString());
+
         } catch (Exception e) {
             LOGGER.error("Failed to register player: {}", player.getName().getString(), e);
             try {

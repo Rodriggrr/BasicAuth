@@ -12,6 +12,7 @@ import static com.basicauth.func.Login.logout;
 import com.basicauth.func.Allowance;
 import com.basicauth.util.TeleportScheduler;
 import com.basicauth.util.helper.MovementState;
+import com.basicauth.util.helper.OpsHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +53,16 @@ public class BasicAuth implements ModInitializer {
             ServerPlayerEntity player = handler.getPlayer();
 			player.sendMessage(announceLogin(player));
 			Allowance.setGameMode(player);
+			if(OpsHelper.isOp(player)) {
+				OpsHelper.ops.put(player.getName().getString(), player);
+			}
 		});
 
 		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
 			ServerPlayerEntity player = handler.getPlayer();
 			logout(player);
 			MovementState.reset(player);
+			OpsHelper.refreshOps(server);
 		});
 		
 	}
