@@ -35,19 +35,27 @@ public class Login {
                 player.sendMessage(parseFromJSON("login.already_authenticated"), false);
                 return false;
             }
-            if (playerData.getPassword().equals(password)) {
-                playerData.setAuthenticated(true);
-                PlayerDataHandler.savePlayerData(playerData);
-                player.sendMessage(parseFromJSON("login.success"), false);
-
+            if (playerData.getLoginAttemptCount() >= BasicAuth.MAX_LOGIN_ATTEMPTS) {
+                player.sendMessage(parseFromJSON("login.too_many_attempts"), false);
+                return false;
             } else {
-                playerData.incrementLoginAttemptCount();
-                PlayerDataHandler.savePlayerData(playerData);
-                if (playerData.getLoginAttemptCount() >= BasicAuth.MAX_LOGIN_ATTEMPTS) {
-                    player.sendMessage(parseFromJSON("login.too_many_attempts"), false);
-                    // Optionally kick the player or take other actions
+                if (playerData.getPassword().equals(password)) {
+                    playerData.setAuthenticated(true);
+                    PlayerDataHandler.savePlayerData(playerData);
+                    player.sendMessage(parseFromJSON("login.success"), false);
                 } else {
-                    player.sendMessage(parseFromJSON("login.failed"), false);
+                    playerData.incrementLoginAttemptCount();
+                    PlayerDataHandler.savePlayerData(playerData);
+                    int amount = BasicAuth.MAX_LOGIN_ATTEMPTS - playerData.getLoginAttemptCount();
+                    if (amount > 0)
+                        player.sendMessage(parseFromJSON("login.failed", amount), false);
+                    else {
+                        player.sendMessage(parseFromJSON("login.no_attempts_left"), false);
+                        playerData.setAuthenticated(false); // Reset authentication status
+                        playerData.setAllowed(false);
+                        PlayerDataHandler.savePlayerData(playerData);
+                    }
+                    return false;
                 }
             }
             return true;

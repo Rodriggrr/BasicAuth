@@ -151,6 +151,9 @@ public class OpsHelper {
         }
 
         playerData.setPassword(newPassword);
+        playerData.setAuthenticated(false); // Reset authentication status
+        playerData.resetLoginAttemptCount(); // Reset login attempts
+        playerData.setAllowed(false); // Reset allowance status
         PlayerDataHandler.savePlayerData(playerData);
 
         try {

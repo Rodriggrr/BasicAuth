@@ -19,8 +19,8 @@
 
     "login.already_authenticated": "¤c&bi&[ERROR]¤f You are already authenticated.",
     "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&successful¤f.",
-    "login.failed": "¤c&bi&[ERROR]¤f Login failed. ¤ePlease check your username and password.",
-    "login.too_many_attempts": "¤c&bi&[ERROR]¤f Too many login attempts. ¤eTry again later.",
+    "login.failed": "¤c&bi&[ERROR]¤f Login failed. ¤eYou have %s attempts left.",
+    "login.too_many_attempts": "¤c&bi&[ERROR]¤f Too many login attempts. ¤eContact an admin for assistance.",
     "login.not_registered": "¤c&bi&[ERROR]¤f You are not registered. Use ¤b/register <password>¤f to create an account.",
 
     "register.success": "¤6&bi&[INFO]¤f Registration ¤a&b&successful¤f! Use ¤b/login <password>¤f to log in.",
@@ -62,8 +62,9 @@
 
     "login.already_authenticated": "¤c&bi&[ERRO]¤f Tu já tá logado, ô caba apressado!",
     "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&feito com sucesso¤f, ai dentro!",
-    "login.failed": "¤c&bi&[ERRO]¤f Login deu ruim, visse? ¤eConfere teu nome e tua senha, ô besta.",
-    "login.too_many_attempts": "¤c&bi&[ERRO]¤f Tentou demais, ô bonequeiro! ¤eVai dá uma voltinha e tenta mais tarde.",
+    "login.failed": "¤c&bi&[ERRO]¤f Login deu ruim, visse? ¤eConfere teu nome e tua senha¤f, ô besta, mas tu so pode tentar mais ¤6%s ¤fvezes.",
+    "login.no_attempts_left": "¤c&bi&[ERRO]¤f Ih acabaro as tentativas. ¤c&b&Deu foi merda foi?",
+    "login.too_many_attempts": "¤c&bi&[ERRO]¤f Tentou demais, ô bonequeiro! ¤eFala com um admin. Tá tentando invadir é?",
     "login.not_registered": "¤c&bi&[ERRO]¤f Tu num tem conta ainda não. Usa ¤b/registrar <senha>¤f e se ajeita, visse?",
 
     "register.success": "¤6&bi&[INFO]¤f Cadastro ¤a&b&feito com sucesso¤f, ô caba bom! Agora faz o login com ¤b/login <senha>¤f.",
