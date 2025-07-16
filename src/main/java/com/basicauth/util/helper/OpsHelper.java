@@ -118,7 +118,7 @@ public class OpsHelper {
             MovementState.reset(other);
             other.changeGameMode(GameMode.SPECTATOR);
             try {
-                other.sendMessage(parseFromJSON("admin.player_deleted", playerName), false);
+                other.sendMessage(parseFromJSON("player.has_been_deleted", playerName), false);
             } catch (Exception e) {
                 System.err.println("Failed to send player deleted message to player " + playerName + ": " + e.getMessage());
             }
@@ -130,7 +130,7 @@ public class OpsHelper {
         }
 
         try {
-            source.sendFeedback(Wrapper.wrap(() -> parseFromJSON("player.has_been_deleted", playerName)), false);
+            source.sendFeedback(Wrapper.wrap(() -> parseFromJSON("admin.player_deleted", playerName)), false);
         } catch (Exception e) {
             System.err.println("Failed to send player deletion message to op " + source.getName() + ": " + e.getMessage());
         }

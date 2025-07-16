@@ -40,5 +40,48 @@
     "command.delete": "delete",
     "command.player_name": "name",
     "command.list_denied": "list_denied"
+  },
+
+  "pt_BRnd": {
+    "player_not_found": "¤c&bi&[ERRO]¤f Ô caba, o jogador ¤e%s¤f num foi achado não, visse?",
+    "error_occurred": "¤c&bi&[ERRO]¤f Ave Maria, deu foi um piripaque no sistema.",
+
+    "admin.needs_allowance": "¤6&bi&[INFO]¤f Tu tá ¤c&b&barrado, visse?¤f Espera um admin liberar tu pra se achegar.",
+    "admin.already_allowed": "¤c&bi&[ERRO]¤f Ôxe, o caba ¤e%s¤f já tá liberado, se manca!",
+    "admin.allowed_successfully": "¤6&bi&[INFO]¤f Jogador ¤a%s¤f foi ¤a&b&liberado com sucesso¤f. Ai dento!",
+    "admin.allowed_notification": "¤a&bi&[¤*&bi&LIBERADO¤a&bi&]¤f Tu foi ¤a&b&liberado¤f por um admin, ô caba bom! Pode jogar agora, visse?",
+    "admin.already_denied": "¤c&bi&[ERRO]¤f O jogador ¤e%s¤f já tá negado, ô bonequeiro.",
+    "admin.denied_successfully": "¤6&bi&[INFO]¤f Jogador ¤e%s¤f agora tá negado. Sai daí, besta!",
+    "admin.denied_notification": "¤c&bi&[NEGADO]¤f Tu foi ¤c&b&negado¤f por um admin. Vai conversar com ele, deixa de ser maluvido.",
+    "admin.new_player_registered": "¤6&bi&[INFO]¤f Jogador novo ¤a%s¤f apareceu por aqui. Usa ¤b/basicauth liberar <nome>¤f pra liberar o bichim.",
+    "admin.players_waiting_for_allowance": "¤6&bi&[INFO]¤f Os cabras esperando liberação: ¤e%s¤f. Usa ¤b/basicauth listar_negados¤f pra vê quem é que tá na espera.",
+    "admin.list_denied": "¤6&bi&[INFO]¤f Os cabras negados são:\n¤e&bi&%s¤f\nLibera eles usando ¤b/basicauth liberar <nome>¤f se tu quiser.",
+    "admin.no_players_waiting_for_allowance": "¤6&bi&[INFO]¤f Tá tudo limpo, não tem ninguém esperando liberação.",
+    "admin.password_reset_success": "¤6&bi&[INFO]¤f A senha de ¤e%s¤f foi ¤a&b&reinventada com sucesso¤f! Agora vai.",
+    "admin.player_deleted": "¤6&bi&[INFO]¤f Jogador ¤e%s¤f foi ¤c&b&apagado¤f do banco. Foi-se embora que nem jegue brabo.",
+
+    "login.already_authenticated": "¤c&bi&[ERRO]¤f Tu já tá logado, ô caba apressado!",
+    "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&feito com sucesso¤f, ai dentro!",
+    "login.failed": "¤c&bi&[ERRO]¤f Login deu ruim, visse? ¤eConfere teu nome e tua senha, ô besta.",
+    "login.too_many_attempts": "¤c&bi&[ERRO]¤f Tentou demais, ô bonequeiro! ¤eVai dá uma voltinha e tenta mais tarde.",
+    "login.not_registered": "¤c&bi&[ERRO]¤f Tu num tem conta ainda não. Usa ¤b/registrar <senha>¤f e se ajeita, visse?",
+
+    "register.success": "¤6&bi&[INFO]¤f Cadastro ¤a&b&feito com sucesso¤f, ô caba bom! Agora faz o login com ¤b/login <senha>¤f.",
+    "register.failed": "¤c&bi&[ERRO]¤f Eita, num deu certo registrar. ¤eTenta de novo, criatura.",
+    "register.already_registered": "¤c&bi&[ERRO]¤f Tu já tem conta, se manca! Usa ¤b/login <senha>¤f pra se entrar.",
+
+    "welcome.new_player": "¤6&bi&[INFO]¤f Seja bem-vindo, ¤a%s¤f! Usa ¤b/registrar <senha>¤f pra criar tua conta e bora pro jogo!",
+    "welcome.back_player": "¤6&bi&[INFO]¤f Eita lasqueira, tu voltou mesmo hein ¤a%s¤f! Bora logar com ¤b/login <senha>¤f!",
+
+    "player.has_been_deleted": "¤6&bi&[INFO]¤f Tu foi ¤c&b&apagado¤f do banco, cabra. Agora tá deslogado. Usa ¤b/registrar <senha>¤f pra fazer outro cadastro, visse?",
+
+    "command.login": "login",
+    "command.register": "registrar",
+    "command.password": "senha",
+    "command.allow": "liberar",
+    "command.deny": "negar",
+    "command.delete": "apagar",
+    "command.player_name": "nome",
+    "command.list_denied": "listar_negados"
   }
 }
