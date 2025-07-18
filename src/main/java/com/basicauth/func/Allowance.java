@@ -94,7 +94,5 @@ public class Allowance {
             player.changeGameMode(GameMode.SPECTATOR);
             return;
         }
-        
-        player.changeGameMode(player.getServer().getDefaultGameMode());
     }
 }

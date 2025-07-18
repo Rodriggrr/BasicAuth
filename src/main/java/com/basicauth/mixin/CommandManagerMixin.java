@@ -3,6 +3,8 @@ package com.basicauth.mixin;
 import static com.basicauth.func.Allowance.allowed;
 import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
 
+import java.util.regex.Pattern;
+
 import com.basicauth.debug.LoggerStatic;
 import com.basicauth.exception.Wrapper;
 
@@ -21,9 +23,22 @@ public class CommandManagerMixin {
     private void onExecute(com.mojang.brigadier.ParseResults<ServerCommandSource> parseResult, String command, CallbackInfo ci) {
         if (parseResult.getContext().getSource().getEntity() instanceof ServerPlayerEntity player) {
             String firstCommand = command.toLowerCase().split(" ")[0];
+
+            java.util.function.Function<String, String> commandHelper = (String commandStr) -> {
+                try {
+                    return parseFromJSON(commandStr).toString()
+                            .split(Pattern.quote("{"))[1]
+                            .split(Pattern.quote("}"))[0]
+                            .trim();
+
+                } catch (Exception e) {
+                    LoggerStatic.error("Error while parsing command: " + commandStr + " - " + e.getMessage());
+                    return commandStr; // Fallback to original command if parsing fails
+                }
+            };
             
             try {
-                if (!allowed(player) && !firstCommand.equals("login") && !firstCommand.equals("register")) {
+                if (!allowed(player) && !firstCommand.equals(commandHelper.apply("command.login")) && !firstCommand.equals(commandHelper.apply("command.register"))) {
                     parseResult.getContext().getSource().sendFeedback(Wrapper.wrap(() -> parseFromJSON("admin.no_login_op")), false);
                     ci.cancel(); // cancela o comando
                 }

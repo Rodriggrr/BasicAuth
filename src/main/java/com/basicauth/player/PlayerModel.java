@@ -1,5 +1,7 @@
 package com.basicauth.player;
 
+import com.basicauth.debug.LoggerStatic;
+
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
 
@@ -9,7 +11,7 @@ public class PlayerModel {
     private String username;
     private String password = "";
     private int loginAttemptCount = 0;
-    private String latestGameMode = "SURVIVAL"; // Default game mode
+    private String latestGameMode = null;
 
     private boolean isAuthenticated = false;
     private boolean isAllowed = false;
@@ -69,6 +71,7 @@ public class PlayerModel {
     }
 
     public void setLatestGameMode(String latestGameMode) {
+        LoggerStatic.info("Setting latest game mode for player " + username + ": " + latestGameMode);
         this.latestGameMode = latestGameMode;
     }
 

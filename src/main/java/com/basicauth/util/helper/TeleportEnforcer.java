@@ -32,10 +32,9 @@ public class TeleportEnforcer {
 
                     if (allowed(player)) {
                         var playerData = PlayerDataHandler.loadPlayerData(player.getGameProfile().getName());
-                        if (playerData.getLatestGameMode() == null) {
-                            playerData.setLatestGameMode(player.getServer().getDefaultGameMode().asString().toUpperCase());
+                        if (playerData.getLatestGameMode() == null || playerData.getLatestGameMode().isEmpty()) {
+                            playerData.setLatestGameMode(player.getServer().getDefaultGameMode().toString().toUpperCase());
                             PlayerDataHandler.savePlayerData(playerData);
-                            
                         }
 
                         player.changeGameMode(GameMode.valueOf(playerData.getLatestGameMode().toUpperCase()));
