@@ -1,7 +1,5 @@
 package com.basicauth.player;
 
-import com.basicauth.debug.LoggerStatic;
-
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
 
@@ -71,7 +69,6 @@ public class PlayerModel {
     }
 
     public void setLatestGameMode(String latestGameMode) {
-        LoggerStatic.info("Setting latest game mode for player " + username + ": " + latestGameMode);
         this.latestGameMode = latestGameMode;
     }
 

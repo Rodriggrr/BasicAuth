@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import com.basicauth.BasicAuth;
 import com.basicauth.exception.MalformedParsedString;
 import com.basicauth.player.*;
+import com.basicauth.util.Logging;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class Login {
     private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);
-
+    private static Logging log = new Logging();
 
     /**
      * Authenticates a player with the given password.
@@ -52,10 +53,12 @@ public class Login {
                         player.sendMessage(parseFromJSON("login.failed", amount), false);
                     else {
                         player.sendMessage(parseFromJSON("login.no_attempts_left"), false);
+                        log.info("Player {} has emptied their login attempts", player.getName().getString());
                     }
                     return false;
                 }
             }
+            log.info("Player {} logged in successfully", player.getName().getString());
             return true;
         } catch (Exception e) {
             try {
@@ -79,7 +82,7 @@ public class Login {
                 playerData.setAuthenticated(false);
                 PlayerDataHandler.savePlayerData(playerData);
             }
-
+            log.info("Player {} logged out and is no longer authenticated.", player.getName().getString());
         } catch (Exception e) {
             LOGGER.error("Failed to logout player: {}", player.getName().getString(), e);
             e.printStackTrace();
@@ -110,6 +113,7 @@ public class Login {
         try {
             if(playerData.isAuthenticated() && (!playerData.isAllowed() && needs_allowance)) 
                 player.sendMessage(parseFromJSON("admin.needs_allowance"));
+                log.info("Player {} is successfully authenticated but needs admin allowance.", player.getName().getString());
 
         } catch (Exception e) {
             LOGGER.error("Error while getting player " + playerData.getUsername() + " permission.", e);

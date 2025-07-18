@@ -9,13 +9,16 @@ import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
 
 import com.basicauth.exception.*;
 import com.basicauth.player.*;
+import com.basicauth.util.Logging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+
 public class Allowance {
     private static Logger LOGGER = LoggerFactory.getLogger(Allowance.class);
+    private static Logging log = new Logging();
 
     public static boolean allow(String player, ServerCommandSource source) {
         PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
@@ -34,7 +37,7 @@ public class Allowance {
             PlayerDataHandler.savePlayerData(playerData);
 
             source.sendFeedback(Wrapper.wrap(() -> parseFromJSON("admin.allowed_successfully", player)), false);
-            
+            log.info("Player {} has been allowed by {}", player, source.getName());
 
             // Feedback to the player being allowed
             var other = source.getServer().getPlayerManager().getPlayer(player);
@@ -65,6 +68,7 @@ public class Allowance {
             PlayerDataHandler.savePlayerData(playerData);
 
             source.sendFeedback(Wrapper.wrap(() -> parseFromJSON("admin.denied_successfully", player)), false);
+            log.info("Player {} has been denied by {}", player, source.getName());
 
             // Feedback to the player being denied
             var other = source.getServer().getPlayerManager().getPlayer(player);

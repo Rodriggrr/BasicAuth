@@ -29,6 +29,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BasicAuth implements ModInitializer {
 	public static final String MOD_ID = "basicauth";
+	public static final PlayerDataHandler playerDataHandler = new PlayerDataHandler();
+	
 
 	static SimpleConfig CONFIG = SimpleConfig.of("config").provider(BasicAuth::provider).request();
 
@@ -49,8 +51,6 @@ public class BasicAuth implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 			Commands.registerCommands(dispatcher);
 		});
-
-		LOGGER.info(LocalizationManager.get("test", LOCALE));
 
 		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
 			ServerPlayerEntity player = handler.getPlayer();

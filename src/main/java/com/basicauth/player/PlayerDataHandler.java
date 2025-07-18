@@ -7,6 +7,7 @@ import java.util.Map;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import com.basicauth.debug.LoggerStatic;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,18 +20,25 @@ import static com.basicauth.BasicAuth.players;
 // se nao tiver, carregar do disco.
 
 public class PlayerDataHandler {
-    public static final String DATA_FILE = "player_data.json";
+    public static final String DATA_FILE = "basicauth/player_data.json";
     private static final Gson gson = new Gson();
     //private static final TypeToken<PlayerModel> PlayerModelType = new TypeToken<PlayerModel>() {};
+
+    public PlayerDataHandler() {
+        // Ensure the data file exists
+        ensureDataFileExists();
+    }
 
     private static boolean pathExists(Path path) {
         return Files.exists(path);
     }
 
-    private static Path ensureDataFileExists() {
+    public static Path ensureDataFileExists() {
         Path dataPath = FabricLoader.getInstance().getConfigDir().resolve(DATA_FILE);
         if (!pathExists(dataPath)) {
             try {
+                LoggerStatic.info("[BASIC AUTH] Creating player data file at: " + dataPath);
+                Files.createDirectories(dataPath.getParent());
                 Files.createFile(dataPath);
             } catch (IOException e) {
                 e.printStackTrace();
