@@ -39,7 +39,7 @@ to use any "&" arguments, you must have a color code before it. MUST.
 6: GOLD
 7: GRAY
 8: DARK_GRAY
-9: BLUE
+9: BLUE 
 a: GREEN
 b: AQUA
 c: RED
