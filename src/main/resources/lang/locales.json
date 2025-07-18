@@ -59,6 +59,8 @@
     "admin.no_players_waiting_for_allowance": "¤6&bi&[INFO]¤f Tá tudo limpo, não tem ninguém esperando liberação.",
     "admin.password_reset_success": "¤6&bi&[INFO]¤f A senha de ¤e%s¤f foi ¤a&b&reinventada com sucesso¤f! Agora vai.",
     "admin.player_deleted": "¤6&bi&[INFO]¤f Jogador ¤e%s¤f foi ¤c&b&apagado¤f do banco. Foi-se embora que nem jegue brabo.",
+    "admin.no_login_op": "¤c&bi&[ERRO]¤f Tu não tá liberado pra usar esse comando, ô caba! Loga primeiro e deixa de ser avexado.",
+    "admin.no_spectator_teleport": "¤c&bi&[ERRO]¤f Tu não pode se teletransportar como espectador, zé ruela. Tá querendo é burlar é?.",
 
     "login.already_authenticated": "¤c&bi&[ERRO]¤f Tu já tá logado, ô caba apressado!",
     "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&feito com sucesso¤f, ai dentro!",

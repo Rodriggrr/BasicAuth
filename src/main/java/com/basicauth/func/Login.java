@@ -2,6 +2,7 @@ package com.basicauth.func;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import static com.basicauth.func.Allowance.allowed;
 import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
 
 import org.slf4j.Logger;
@@ -51,9 +52,6 @@ public class Login {
                         player.sendMessage(parseFromJSON("login.failed", amount), false);
                     else {
                         player.sendMessage(parseFromJSON("login.no_attempts_left"), false);
-                        playerData.setAuthenticated(false); // Reset authentication status
-                        playerData.setAllowed(false);
-                        PlayerDataHandler.savePlayerData(playerData);
                     }
                     return false;
                 }
@@ -75,6 +73,9 @@ public class Login {
 
         try {
             if (playerData != null) {
+                if(allowed(player)) {
+                    playerData.setLatestGameMode(player.getGameMode().asString().toUpperCase());
+                }
                 playerData.setAuthenticated(false);
                 PlayerDataHandler.savePlayerData(playerData);
             }

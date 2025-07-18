@@ -1,6 +1,7 @@
 package com.basicauth.player;
 
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.GameMode;
 
 
 
@@ -8,6 +9,7 @@ public class PlayerModel {
     private String username;
     private String password = "";
     private int loginAttemptCount = 0;
+    private String latestGameMode = "SURVIVAL"; // Default game mode
 
     private boolean isAuthenticated = false;
     private boolean isAllowed = false;
@@ -60,6 +62,30 @@ public class PlayerModel {
 
     public void setAllowed(boolean allowed) {
         isAllowed = allowed;
+    }
+
+    public String getLatestGameMode() {
+        return latestGameMode;
+    }
+
+    public void setLatestGameMode(String latestGameMode) {
+        this.latestGameMode = latestGameMode;
+    }
+
+    public static void changeGameModeToLatest(ServerPlayerEntity player) {
+        var playerData = PlayerDataHandler.loadPlayerData(player.getName().getString());
+        if (playerData != null) {
+            String latestGameMode = playerData.getLatestGameMode();
+            if (latestGameMode != null && !latestGameMode.isEmpty()) {
+                try {
+                    GameMode mode = GameMode.valueOf(latestGameMode.toUpperCase());
+                    // Assuming there's a method to change the player's game mode
+                    player.changeGameMode(mode);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid game mode: " + latestGameMode);
+                }
+            }
+        }
     }
 
     @Override

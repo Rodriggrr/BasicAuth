@@ -115,7 +115,6 @@ public class OpsHelper {
 
         var other = source.getServer().getPlayerManager().getPlayer(playerName);
         if (other != null) {
-            MovementState.reset(other);
             other.changeGameMode(GameMode.SPECTATOR);
             try {
                 other.sendMessage(parseFromJSON("player.has_been_deleted", playerName), false);
@@ -130,7 +129,7 @@ public class OpsHelper {
         }
 
         try {
-            source.sendFeedback(Wrapper.wrap(() -> parseFromJSON("admin.player_deleted", playerName)), false);
+            broadcastToOps("admin.player_deleted", playerName);
         } catch (Exception e) {
             System.err.println("Failed to send player deletion message to op " + source.getName() + ": " + e.getMessage());
         }

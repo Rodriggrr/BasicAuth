@@ -9,7 +9,6 @@ import static com.basicauth.BasicAuth.REGISTER_NEEDS_ALLOWANCE;
 
 import com.basicauth.exception.*;
 import com.basicauth.player.*;
-import com.basicauth.util.helper.MovementState;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +68,6 @@ public class Allowance {
 
             // Feedback to the player being denied
             var other = source.getServer().getPlayerManager().getPlayer(player);
-            MovementState.reset(other);
             if (other != null) {
                 other.sendMessage(parseFromJSON("admin.denied_notification"), false);
             }
