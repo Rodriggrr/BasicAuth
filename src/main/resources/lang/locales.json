@@ -15,11 +15,14 @@
     "admin.list_denied": "¤6&bi&[INFO]¤f Players currently denied:\n¤e&bi&%s¤f\nUse ¤b/basicauth allow <name>¤f to allow them.",
     "admin.no_players_waiting_for_allowance": "¤6&bi&[INFO]¤f No players are currently waiting for allowance.",
     "admin.password_reset_success": "¤6&bi&[INFO]¤f Password for player ¤e%s¤f has been ¤a&b&successfully reset¤f.",
-    "admin.player_deleted": "¤6&bi&[INFO]¤f Player ¤e%s¤f has been ¤c&b&deleted from the database.",
+    "admin.player_deleted": "¤6&bi&[INFO]¤f Player ¤e%s¤f has been ¤c&b&deleted¤f from the database.",
+    "admin.no_login_op": "¤c&bi&[ERROR]¤f You are not allowed to use this command, please log in first.",
+    "admin.no_spectator_teleport": "¤c&bi&[ERROR]¤f You cannot teleport as a spectator. Trying to cheat?",
 
-    "login.already_authenticated": "¤c&bi&[ERROR]¤f You are already authenticated.",
+    "login.already_authenticated": "¤c&bi&[ERROR]¤f You are already logged in.",
     "login.success": "¤6&bi&[INFO]¤f Login ¤a&b&successful¤f.",
     "login.failed": "¤c&bi&[ERROR]¤f Login failed. ¤eYou have %s attempts left.",
+    "login.no_attempts_left": "¤c&bi&[ERROR]¤f No login attempts left. ¤eContact an admin for help.",
     "login.too_many_attempts": "¤c&bi&[ERROR]¤f Too many login attempts. ¤eContact an admin for assistance.",
     "login.not_registered": "¤c&bi&[ERROR]¤f You are not registered. Use ¤b/register <password>¤f to create an account.",
 
@@ -39,7 +42,8 @@
     "command.deny": "deny",
     "command.delete": "delete",
     "command.player_name": "name",
-    "command.list_denied": "list_denied"
+    "command.list_denied": "list_denied",
+    "command.password_reset": "password_reset"
   },
 
   "pt_BRnd": {
