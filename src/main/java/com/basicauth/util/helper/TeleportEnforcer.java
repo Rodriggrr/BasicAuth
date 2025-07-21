@@ -35,9 +35,11 @@ public class TeleportEnforcer {
                         if (playerData.getLatestGameMode() == null || playerData.getLatestGameMode().isEmpty()) {
                             playerData.setLatestGameMode(player.getServer().getDefaultGameMode().toString().toUpperCase());
                             PlayerDataHandler.savePlayerData(playerData);
+                            PlayerDataHandler.refreshPlayerCache(player);
                         }
 
                         player.changeGameMode(GameMode.valueOf(playerData.getLatestGameMode().toUpperCase()));
+                        player.getServer().getCommandManager().sendCommandTree(player);
                         iter.remove();
                         continue;
                     }

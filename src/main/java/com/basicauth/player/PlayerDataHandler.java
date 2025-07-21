@@ -206,5 +206,33 @@ public class PlayerDataHandler {
             return 0;
         }
     }
-    
+
+    public static void refreshCache() {
+        players.clear();
+        Path dataPath = ensureDataFileExists();
+        try {
+            String json = Files.readString(dataPath);
+            Type type = new TypeToken<HashMap<String, PlayerModel>>() {}.getType();
+            Map<String, PlayerModel> playerMap = gson.fromJson(json, type);
+            if (playerMap != null) {
+                players.putAll(playerMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void refreshPlayerCache(ServerPlayerEntity player) {
+        if(player == null) {
+            return;
+        }
+        String playerName = player.getName().getString();
+        PlayerModel playerData = loadPlayerData(playerName);
+        if(playerData != null) {
+            players.put(playerName, playerData);
+        } else {
+            players.remove(playerName); 
+        }
+    }
 }
