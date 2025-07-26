@@ -94,13 +94,6 @@ public class Commands {
                     .then(CommandManager.argument(commandFromJSON("command.player_name"), StringArgumentType.string())
                         .executes(context -> {
                             Allowance.deny(StringArgumentType.getString(context, commandFromJSON("command.player_name")), context.getSource());
-                            MinecraftServer server = context.getSource().getServer();
-                            String playerName = StringArgumentType.getString(context, commandFromJSON("command.player_name"));
-                            ServerPlayerEntity player = server.getPlayerManager().getPlayer(playerName);
-
-                            if (player != null) {
-                                player.changeGameMode(GameMode.SPECTATOR);
-                            }
                             return 1;
                         })
                     )    

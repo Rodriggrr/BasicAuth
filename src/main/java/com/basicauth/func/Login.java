@@ -76,9 +76,6 @@ public class Login {
 
         try {
             if (playerData != null) {
-                if(allowed(player)) {
-                    playerData.setLatestGameMode(player.getGameMode().asString().toUpperCase());
-                }
                 playerData.setAuthenticated(false);
                 PlayerDataHandler.savePlayerData(playerData);
             }

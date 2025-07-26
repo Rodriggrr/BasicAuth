@@ -91,12 +91,8 @@ public class Allowance {
         return (REGISTER_NEEDS_ALLOWANCE ? playerData.isAllowed() : true) && playerData.isAuthenticated();
     }
 
-    public static void setGameMode(ServerPlayerEntity player) {
-        PlayerModel playerData = PlayerDataHandler.loadPlayerData(player);
-
-        if(playerData == null || !playerData.isAuthenticated() || (!playerData.isAllowed() && REGISTER_NEEDS_ALLOWANCE)) {
-            player.changeGameMode(GameMode.SPECTATOR);
-            return;
-        }
+    public static boolean allowed(String playerName) {
+        PlayerModel playerData = PlayerDataHandler.loadPlayerData(playerName);
+        return playerData != null && (REGISTER_NEEDS_ALLOWANCE ? playerData.isAllowed() : true) && playerData.isAuthenticated();
     }
 }

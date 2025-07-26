@@ -1,17 +1,17 @@
 package com.basicauth.util.helper;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.network.packet.s2c.play.ChunkDataS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.world.GameMode;
+import net.minecraft.server.world.ServerWorld;
+
+import net.minecraft.world.chunk.WorldChunk;
 
 import static com.basicauth.func.Allowance.allowed;
 
-
 import java.util.*;
 
-import com.basicauth.player.PlayerDataHandler;
-
-public class TeleportEnforcer {
+public class StopPlayerActions {
     private static final Map<UUID, Integer> timers = new HashMap<>();
 
     public static void init() {
@@ -28,36 +28,32 @@ public class TeleportEnforcer {
                     if (player == null) {
                         iter.remove();
                         continue;
-                    }   
+                    }
 
                     if (allowed(player)) {
-                        var playerData = PlayerDataHandler.loadPlayerData(player.getGameProfile().getName());
-                        if (playerData.getLatestGameMode() == null || playerData.getLatestGameMode().isEmpty()) {
-                            playerData.setLatestGameMode(player.getServer().getDefaultGameMode().toString().toUpperCase());
-                            PlayerDataHandler.savePlayerData(playerData);
-                            PlayerDataHandler.refreshPlayerCache(player);
-                        }
-
-                        player.changeGameMode(GameMode.valueOf(playerData.getLatestGameMode().toUpperCase()));
                         player.getServer().getCommandManager().sendCommandTree(player);
+                        synchronizeChunk(player);
                         iter.remove();
                         continue;
                     }
 
                     if (ticks <= 0) {
-                        // Re-teleporta o jogador
+
                         player.networkHandler.requestTeleport(
                                 player.getX(), player.getY(), player.getZ(),
-                                player.getYaw(), player.getPitch()
-                        );
-                        // Reinicia contador (20 ticks = 1 segundo)
+                                player.getYaw(), player.getPitch());
+                        // Resend the chunk data to the player, as in the client, visually, the player
+                        // broke the block
+                        // and the client needs to update the chunk data to fix the visual error.
+                        synchronizeChunk(player);
+
                         entry.setValue(20);
                     } else {
-                        entry.setValue(ticks - 1); // Decrementa o contador
+                        entry.setValue(ticks - 1);
                     }
                 } catch (Exception e) {
                     System.err.println("Error in TeleportEnforcer: " + e.getMessage());
-                    iter.remove(); // Remove the entry if an error occurs
+                    iter.remove();
                 }
             }
         });
@@ -69,5 +65,14 @@ public class TeleportEnforcer {
 
     public static void stop(ServerPlayerEntity player) {
         timers.remove(player.getUuid());
+    }
+
+
+    // sincroniza o chunk reenviando o ckunk para o cliente
+    private static void synchronizeChunk(ServerPlayerEntity player) {
+        ServerWorld world = player.getWorld();
+        WorldChunk chunk = world.getChunk(player.getBlockX() >> 4, player.getBlockZ() >> 4);
+
+        player.networkHandler.sendPacket(new ChunkDataS2CPacket(chunk, world.getLightingProvider(), null, null));
     }
 }

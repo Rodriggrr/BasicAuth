@@ -115,7 +115,6 @@ public class OpsHelper {
 
         var other = source.getServer().getPlayerManager().getPlayer(playerName);
         if (other != null) {
-            other.changeGameMode(GameMode.SPECTATOR);
             try {
                 other.sendMessage(parseFromJSON("player.has_been_deleted", playerName), false);
             } catch (Exception e) {

@@ -1,28 +1,16 @@
 package com.basicauth;
 
-import com.basicauth.commands.Commands;
 import com.basicauth.util.LocalizationManager;
 import com.basicauth.util.SimpleConfig;
+import com.basicauth.util.helper.StopPlayerActions;
 import com.basicauth.player.*;
+import com.basicauth.util.EventHandler;
 
 import net.fabricmc.api.ModInitializer;
 
-import static com.basicauth.func.Login.announceLogin;
-import static com.basicauth.func.Login.logout;
-import static com.basicauth.func.Allowance.allowed;
-import com.basicauth.func.Allowance;
-import com.basicauth.util.helper.OpsHelper;
-import com.basicauth.util.helper.TeleportEnforcer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.world.GameMode;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,38 +33,10 @@ public class BasicAuth implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		TeleportEnforcer.init();
+		StopPlayerActions.init();
 		LocalizationManager.loadFromResource(LOCALE);
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			Commands.registerCommands(dispatcher);
-		});
-
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-			ServerPlayerEntity player = handler.getPlayer();
-			player.sendMessage(announceLogin(player));
-			Allowance.setGameMode(player);
-			if (OpsHelper.isOp(player)) {
-				OpsHelper.ops.put(player.getName().getString(), player);
-			}
-		});
-
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
-			ServerPlayerEntity player = handler.getPlayer();
-			logout(player);
-			OpsHelper.refreshOps(server);
-		});
-
-		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-			try {
-				if (player.getGameMode() == GameMode.SPECTATOR && !allowed(player.getServer().getPlayerManager().getPlayer(player.getUuid()))) {
-					return ActionResult.FAIL; // Bloqueia a interação apenas se não for aprovado
-				}
-			} catch (Exception e) {
-				LOGGER.error("Error in UseBlockCallback: {}", e.getMessage());
-			}
-			return ActionResult.PASS;
-		});
+		EventHandler.init();
 	}
 
 	private static String provider(String filename) {

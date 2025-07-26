@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"ServerPlayNetworkHandlerMixin",
-		"CommandManagerMixin"
+		"CommandManagerMixin",
+		"MobEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

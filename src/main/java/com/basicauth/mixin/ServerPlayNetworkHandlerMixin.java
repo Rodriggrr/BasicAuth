@@ -4,8 +4,7 @@ import static com.basicauth.func.Allowance.allowed;
 import static com.basicauth.util.LocatedAndParsed.parseFromJSON;
 
 import com.basicauth.debug.LoggerStatic;
-import com.basicauth.util.helper.TeleportEnforcer;
-
+import com.basicauth.util.helper.StopPlayerActions;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -28,14 +27,27 @@ public class ServerPlayNetworkHandlerMixin {
         try {
             if (!allowed(player)) {
                 ci.cancel(); // cancela o movimento
-                TeleportEnforcer.start(player); // inicia re-teleporte a cada 1 segundo
+                StopPlayerActions.start(player); // inicia re-teleporte a cada 1 segundo
             } else {
-                TeleportEnforcer.stop(player);
+                StopPlayerActions.stop(player);
             }
         } catch (Exception e) {
             LoggerStatic.error(e.getMessage());
         }
     }
+
+    @Inject(method = "onPlayerAction", at = @At("HEAD"), cancellable = true)
+    private void blockPlayerAction(CallbackInfo ci) {
+        ServerPlayerEntity player = ((ServerPlayNetworkHandler) (Object) this).player;
+        
+        try { 
+            if(!allowed(player)) {
+                ci.cancel(); // cancela a ação do jogador
+            }
+        } catch (Exception e) {
+            LoggerStatic.error("Error while blocking player action: " + e.getMessage());
+        }
+    }   
 
     @Inject(method = "onSpectatorTeleport", at = @At("HEAD"), cancellable = true)
     private void blockSpectatorTeleport(SpectatorTeleportC2SPacket packet, CallbackInfo ci) {
