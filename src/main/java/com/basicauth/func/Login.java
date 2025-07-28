@@ -43,6 +43,7 @@ public class Login {
             } else {
                 if (playerData.getPassword().equals(password)) {
                     playerData.setAuthenticated(true);
+                    playerData.resetLoginAttemptCount();
                     PlayerDataHandler.savePlayerData(playerData);
                     player.sendMessage(parseFromJSON("login.success"), false);
                 } else {
